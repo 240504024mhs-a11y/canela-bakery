@@ -1,0 +1,1823 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>canela bakery — Kehangatan Kayu Manis & Roti Artisan</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-cream: #F7EFE2;
+            --bg-warm: #EFE0C9;
+            --bg-card: #FFFDF8;
+            --choco-dark: #4A2511;
+            --choco-mid: #6F3718;
+            --choco-soft: #8A4B27;
+            --muted: #6B4D3B;
+            --butter-yellow: #F4B43A;
+            --butter-bright: #F8C658;
+            --butter-soft: #FDE39C;
+            --border-warm: #DEC8AA;
+            --shadow-warm: 0 18px 40px rgba(74, 37, 17, 0.12);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-cream);
+            color: var(--choco-dark);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            line-height: 1.65;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, .font-serif {
+            font-family: 'Fraunces', serif;
+            letter-spacing: -0.015em;
+        }
+
+        /* ================= VISUAL WELCOME GATE (NO WORDS) ================= */
+        #welcome-gate {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: radial-gradient(circle at center, #FBF4E8 0%, #EAD6B7 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.75s ease, visibility 0.75s ease, transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        #welcome-gate.hidden {
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(1.04);
+            pointer-events: none;
+        }
+        .gate-glow {
+            position: absolute;
+            width: 380px;
+            height: 380px;
+            border-radius: 50%;
+            filter: blur(70px);
+            opacity: 0.55;
+            pointer-events: none;
+        }
+        .gate-glow-1 { background: var(--butter-soft); top: 8%; left: 14%; }
+        .gate-glow-2 { background: #E3B37B; bottom: 8%; right: 14%; }
+        .gate-enter-btn {
+            margin-top: 2rem;
+            width: 74px;
+            height: 74px;
+            border-radius: 50%;
+            background: var(--choco-dark);
+            border: 3.5px solid var(--butter-yellow);
+            color: var(--butter-soft);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 14px 30px rgba(74, 37, 17, 0.3);
+            transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.3s;
+            position: relative;
+        }
+        .gate-enter-btn::after {
+            content: '';
+            position: absolute;
+            inset: -11px;
+            border-radius: 50%;
+            border: 2px dashed var(--choco-mid);
+            opacity: 0.5;
+            animation: spinSlow 16s linear infinite;
+        }
+        @keyframes spinSlow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        .gate-enter-btn:hover {
+            transform: scale(1.1);
+            background: var(--choco-mid);
+        }
+
+        /* ================= NAVBAR ================= */
+        .top-bar {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(247, 239, 226, 0.92);
+            backdrop-filter: blur(14px);
+            border-bottom: 2px solid var(--border-warm);
+            padding: 0.9rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+        .brand-lockup {
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+            text-decoration: none;
+            color: var(--choco-dark);
+        }
+        .brand-lockup strong {
+            display: block;
+            font-family: 'Fraunces', serif;
+            font-size: 1.38rem;
+            color: var(--choco-dark);
+            line-height: 1.1;
+        }
+        .brand-lockup small {
+            display: block;
+            font-size: 0.76rem;
+            color: var(--choco-mid);
+            font-weight: 600;
+        }
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 1.8rem;
+            align-items: center;
+        }
+        .nav-menu a {
+            text-decoration: none;
+            color: var(--choco-dark);
+            font-weight: 700;
+            font-size: 0.92rem;
+            transition: color 0.2s;
+        }
+        .nav-menu a:hover {
+            color: var(--choco-soft);
+        }
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+        }
+        .btn-pill {
+            border-radius: 99px;
+            padding: 0.56rem 1.15rem;
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            border: 1.5px solid var(--border-warm);
+            transition: all 0.25s ease;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .btn-music {
+            background: var(--bg-card);
+            color: var(--choco-dark);
+        }
+        .btn-music.playing {
+            background: var(--butter-soft);
+            border-color: var(--butter-yellow);
+            color: var(--choco-dark);
+        }
+        .eq-bars {
+            display: inline-flex;
+            align-items: flex-end;
+            gap: 2px;
+            height: 12px;
+        }
+        .eq-bars span {
+            width: 2.5px;
+            height: 4px;
+            background: var(--choco-dark);
+            border-radius: 2px;
+        }
+        .btn-music.playing .eq-bars span:nth-child(1) { animation: eqWave 0.65s infinite alternate; }
+        .btn-music.playing .eq-bars span:nth-child(2) { animation: eqWave 0.45s infinite alternate 0.2s; }
+        .btn-music.playing .eq-bars span:nth-child(3) { animation: eqWave 0.75s infinite alternate 0.35s; }
+        @keyframes eqWave {
+            from { height: 3px; }
+            to { height: 13px; }
+        }
+        .btn-cart {
+            background: var(--choco-dark);
+            color: #FFFDF8;
+            border-color: var(--choco-dark);
+        }
+        .btn-cart:hover {
+            background: var(--choco-mid);
+        }
+        .cart-count {
+            background: var(--butter-yellow);
+            color: var(--choco-dark);
+            font-weight: 800;
+            padding: 1px 8px;
+            border-radius: 99px;
+            font-size: 0.78rem;
+        }
+
+        /* ================= HERO & INTERACTIVE 3D MENU STAGE ================= */
+        .hero-wrapper {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 3.5rem 5% 2.5rem;
+        }
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1.05fr 0.95fr;
+            gap: 3rem;
+            align-items: center;
+        }
+        .eyebrow-tag {
+            display: inline-block;
+            background: var(--butter-soft);
+            color: var(--choco-dark);
+            border: 1.5px solid var(--butter-yellow);
+            padding: 0.4rem 1rem;
+            border-radius: 99px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            margin-bottom: 1.1rem;
+        }
+        .hero-copy h1 {
+            font-size: clamp(2.3rem, 4.4vw, 3.65rem);
+            line-height: 1.12;
+            color: var(--choco-dark);
+            margin-bottom: 1.15rem;
+        }
+        .hero-copy p {
+            font-size: 1.05rem;
+            color: var(--muted);
+            max-width: 520px;
+            margin-bottom: 1.9rem;
+        }
+        .hero-cta-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.85rem;
+        }
+        .btn-solid {
+            background: var(--choco-dark);
+            color: var(--butter-soft);
+            border: 2px solid var(--choco-dark);
+            padding: 0.85rem 1.8rem;
+            border-radius: 99px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .btn-solid:hover {
+            background: var(--choco-mid);
+            transform: translateY(-2px);
+        }
+        .btn-yellow {
+            background: var(--butter-yellow);
+            color: var(--choco-dark);
+            border: 2px solid var(--choco-dark);
+            padding: 0.85rem 1.8rem;
+            border-radius: 99px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.95rem;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .btn-yellow:hover {
+            background: var(--butter-bright);
+            transform: translateY(-2px);
+        }
+
+        /* Interactive 3D Swipeable Card Stage */
+        .hero-3d-panel {
+            background: linear-gradient(145deg, #EFE0C9 0%, #F9E5AE 100%);
+            border: 2px solid var(--border-warm);
+            border-radius: 32px;
+            padding: 1.75rem;
+            box-shadow: var(--shadow-warm);
+            position: relative;
+        }
+        .stage-3d-box {
+            position: relative;
+            height: 310px;
+            perspective: 1100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: grab;
+            user-select: none;
+            touch-action: pan-y;
+        }
+        .stage-3d-box:active {
+            cursor: grabbing;
+        }
+        .ring-3d {
+            width: 215px;
+            height: 265px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.08s linear;
+        }
+        .card-3d-item {
+            position: absolute;
+            inset: 0;
+            background: var(--bg-card);
+            border: 2px solid var(--border-warm);
+            border-radius: 24px;
+            padding: 10px;
+            box-shadow: 0 12px 26px rgba(74, 37, 17, 0.14);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .card-3d-item.is-active {
+            border-color: var(--choco-dark);
+            box-shadow: 0 18px 34px rgba(74, 37, 17, 0.24);
+        }
+        .card-3d-item img {
+            width: 100%;
+            height: 205px;
+            object-fit: cover;
+            border-radius: 16px;
+            pointer-events: none;
+        }
+        .card-3d-item span {
+            font-family: 'Fraunces', serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--choco-dark);
+            text-align: center;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding-top: 4px;
+        }
+        .active-3d-caption {
+            margin-top: 1rem;
+            background: var(--bg-card);
+            border: 1.5px solid var(--border-warm);
+            border-radius: 20px;
+            padding: 1rem 1.25rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+        }
+        .active-3d-caption h3 {
+            font-size: 1.12rem;
+            color: var(--choco-dark);
+            margin-bottom: 0.2rem;
+        }
+        .active-3d-caption p {
+            font-size: 0.85rem;
+            color: var(--muted);
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .stage-nav-arrows {
+            display: flex;
+            gap: 0.45rem;
+            flex-shrink: 0;
+        }
+        .arrow-circle {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 1.5px solid var(--choco-dark);
+            background: var(--butter-soft);
+            color: var(--choco-dark);
+            cursor: pointer;
+            font-weight: 800;
+            transition: all 0.2s;
+        }
+        .arrow-circle:hover {
+            background: var(--choco-dark);
+            color: var(--butter-soft);
+        }
+
+        /* ================= 3 TRUST STRIPS + PAPAN OVEN HARI INI ================= */
+        .highlights-oven-grid {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 1.75rem;
+            margin-top: 2.75rem;
+            align-items: stretch;
+        }
+        .trust-cards-stack {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+        }
+        .trust-card {
+            background: var(--bg-card);
+            border: 1.5px solid var(--border-warm);
+            border-top: 5px solid var(--butter-yellow);
+            border-radius: 22px;
+            padding: 1.35rem 1.2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        .trust-card strong {
+            font-family: 'Fraunces', serif;
+            font-size: 1.1rem;
+            color: var(--choco-dark);
+            margin-bottom: 0.35rem;
+        }
+        .trust-card small {
+            font-size: 0.86rem;
+            color: var(--muted);
+            line-height: 1.45;
+        }
+
+        .oven-board {
+            background: var(--choco-dark);
+            color: #FFFDF8;
+            border: 2px solid var(--butter-yellow);
+            border-radius: 24px;
+            padding: 1.5rem 1.75rem;
+            box-shadow: var(--shadow-warm);
+        }
+        .oven-board h2 {
+            font-size: 1.28rem;
+            color: var(--butter-yellow);
+            margin-bottom: 0.2rem;
+        }
+        .oven-board > p {
+            font-size: 0.84rem;
+            color: #E8D5BC;
+            margin-bottom: 0.9rem;
+        }
+        .oven-board ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.55rem;
+        }
+        .oven-board li {
+            display: flex;
+            align-items: baseline;
+            gap: 0.85rem;
+            font-size: 0.88rem;
+            border-bottom: 1px dashed rgba(244, 180, 58, 0.3);
+            padding-bottom: 0.45rem;
+        }
+        .oven-board li:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+        .oven-board b {
+            font-family: 'Fraunces', serif;
+            color: var(--butter-yellow);
+            min-width: 48px;
+        }
+
+        /* ================= MENU SECTION (ALL 20 ITEMS) ================= */
+        .section-block {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 4.5rem 5%;
+        }
+        .section-title-box {
+            margin-bottom: 2rem;
+        }
+        .section-title-box h2 {
+            font-size: clamp(1.9rem, 3.4vw, 2.6rem);
+            color: var(--choco-dark);
+            margin-bottom: 0.45rem;
+        }
+        .section-title-box p {
+            color: var(--muted);
+            font-size: 1rem;
+            max-width: 620px;
+        }
+
+        .menu-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        .tab-list {
+            display: flex;
+            gap: 0.55rem;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            background: var(--bg-card);
+            border: 1.5px solid var(--border-warm);
+            color: var(--choco-mid);
+            padding: 0.54rem 1.15rem;
+            border-radius: 99px;
+            font-size: 0.88rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .tab-btn.active, .tab-btn:hover {
+            background: var(--choco-dark);
+            color: var(--butter-soft);
+            border-color: var(--choco-dark);
+        }
+        .search-input {
+            padding: 0.62rem 1.2rem;
+            border-radius: 99px;
+            border: 1.5px solid var(--border-warm);
+            background: var(--bg-card);
+            min-width: 255px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.9rem;
+            color: var(--choco-dark);
+            outline: none;
+        }
+        .search-input:focus {
+            border-color: var(--choco-dark);
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 1.65rem;
+        }
+        .menu-card {
+            background: var(--bg-card);
+            border: 1.5px solid var(--border-warm);
+            border-radius: 24px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+        }
+        .menu-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--choco-mid);
+            box-shadow: var(--shadow-warm);
+        }
+        .menu-thumb {
+            position: relative;
+            height: 215px;
+            background: var(--bg-warm);
+            overflow: hidden;
+        }
+        .menu-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.45s ease;
+        }
+        .menu-card:hover .menu-thumb img {
+            transform: scale(1.05);
+        }
+        .badge-tag {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: var(--butter-yellow);
+            color: var(--choco-dark);
+            border: 1.5px solid var(--choco-dark);
+            padding: 0.24rem 0.78rem;
+            border-radius: 99px;
+            font-size: 0.75rem;
+            font-weight: 800;
+        }
+        .menu-body {
+            padding: 1.3rem 1.35rem 0.8rem;
+        }
+        .menu-header-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 0.5rem;
+            margin-bottom: 0.45rem;
+        }
+        .menu-header-row h3 {
+            font-size: 1.15rem;
+            color: var(--choco-dark);
+            line-height: 1.25;
+        }
+        .price-pill {
+            background: var(--butter-soft);
+            color: var(--choco-dark);
+            font-weight: 800;
+            font-size: 0.86rem;
+            padding: 0.2rem 0.65rem;
+            border-radius: 99px;
+            white-space: nowrap;
+        }
+        .menu-body p {
+            font-size: 0.88rem;
+            color: var(--muted);
+            line-height: 1.55;
+        }
+        .menu-footer-action {
+            padding: 0.8rem 1.35rem 1.35rem;
+        }
+        .btn-add-bag {
+            width: 100%;
+            background: var(--butter-soft);
+            color: var(--choco-dark);
+            border: 1.5px solid var(--choco-dark);
+            padding: 0.68rem 1rem;
+            border-radius: 99px;
+            font-weight: 700;
+            font-size: 0.88rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .btn-add-bag:hover {
+            background: var(--choco-dark);
+            color: var(--butter-soft);
+        }
+
+        /* ================= STORY & SEHARI DI DAPUR KAMI ================= */
+        .story-band {
+            background: linear-gradient(180deg, #EFE0C9 0%, #F5E6CC 100%);
+            border-top: 2px solid var(--border-warm);
+            border-bottom: 2px solid var(--border-warm);
+        }
+        .story-two-col {
+            display: grid;
+            grid-template-columns: 1.15fr 0.85fr;
+            gap: 3rem;
+            align-items: start;
+        }
+        .story-narrative h2 {
+            font-size: clamp(1.9rem, 3.3vw, 2.55rem);
+            color: var(--choco-dark);
+            margin-bottom: 1.2rem;
+            line-height: 1.18;
+        }
+        .story-narrative p {
+            color: var(--muted);
+            margin-bottom: 1rem;
+            font-size: 0.98rem;
+        }
+        .story-sign {
+            font-family: 'Fraunces', serif;
+            font-style: italic;
+            font-weight: 700;
+            color: var(--choco-mid);
+            font-size: 1.15rem;
+            margin-top: 1.2rem;
+        }
+        .timeline-card {
+            background: var(--bg-card);
+            border: 2px solid var(--choco-dark);
+            border-radius: 26px;
+            padding: 2rem;
+            box-shadow: var(--shadow-warm);
+        }
+        .timeline-card h3 {
+            font-size: 1.38rem;
+            margin-bottom: 1.2rem;
+            color: var(--choco-dark);
+        }
+        .timeline-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 1.1rem;
+        }
+        .timeline-list li {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+        .timeline-list b {
+            font-family: 'Fraunces', serif;
+            background: var(--butter-yellow);
+            color: var(--choco-dark);
+            border: 1px solid var(--choco-dark);
+            padding: 0.2rem 0.65rem;
+            border-radius: 99px;
+            font-size: 0.86rem;
+            flex-shrink: 0;
+        }
+        .timeline-list span {
+            font-size: 0.9rem;
+            color: var(--muted);
+        }
+
+        /* ================= PAKET HEMAT ================= */
+        .bundle-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+            gap: 1.5rem;
+        }
+        .bundle-card {
+            background: var(--bg-card);
+            border: 1.5px solid var(--border-warm);
+            border-radius: 24px;
+            padding: 1.65rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow: 0 10px 25px rgba(74, 37, 17, 0.05);
+        }
+        .bundle-badge {
+            display: inline-block;
+            background: var(--butter-yellow);
+            color: var(--choco-dark);
+            border: 1px solid var(--choco-dark);
+            font-size: 0.76rem;
+            font-weight: 800;
+            padding: 0.25rem 0.75rem;
+            border-radius: 99px;
+            margin-bottom: 0.75rem;
+        }
+        .bundle-card h3 {
+            font-size: 1.25rem;
+            color: var(--choco-dark);
+            margin-bottom: 0.45rem;
+        }
+        .bundle-card p {
+            font-size: 0.9rem;
+            color: var(--muted);
+            margin-bottom: 1.25rem;
+        }
+        .bundle-price-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1.5px dashed var(--border-warm);
+        }
+
+        /* ================= KUNJUNGI KAMI & FOOTER ================= */
+        .visit-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            background: var(--bg-card);
+            border: 2px solid var(--border-warm);
+            border-radius: 28px;
+            padding: 2.5rem;
+            box-shadow: var(--shadow-warm);
+        }
+        .visit-info address {
+            font-style: normal;
+            color: var(--muted);
+            margin: 0.75rem 0 1rem;
+            font-size: 0.96rem;
+        }
+        .social-links-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: 1.25rem;
+        }
+        .hours-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 0.85rem;
+        }
+        .hours-table td {
+            padding: 0.65rem 0;
+            border-bottom: 1px solid var(--border-warm);
+            font-size: 0.92rem;
+        }
+        .hours-table td:last-child {
+            text-align: right;
+            font-weight: 700;
+            color: var(--choco-mid);
+        }
+        footer {
+            background: var(--choco-dark);
+            color: var(--butter-soft);
+            text-align: center;
+            padding: 2.2rem 5%;
+            font-size: 0.88rem;
+        }
+
+        /* ================= CART DRAWER ================= */
+        .cart-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(74, 37, 17, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 140;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+        }
+        .cart-backdrop.open {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .cart-drawer {
+            position: fixed;
+            top: 0;
+            right: -450px;
+            width: 100%;
+            max-width: 420px;
+            height: 100vh;
+            background: var(--bg-cream);
+            border-left: 2px solid var(--choco-dark);
+            z-index: 150;
+            display: flex;
+            flex-direction: column;
+            transition: right 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .cart-drawer.open {
+            right: 0;
+        }
+        .cart-head {
+            padding: 1.35rem 1.5rem;
+            background: var(--choco-dark);
+            color: var(--butter-soft);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .cart-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.25rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.85rem;
+        }
+        .cart-row {
+            background: var(--bg-card);
+            border: 1.5px solid var(--border-warm);
+            border-radius: 18px;
+            padding: 0.85rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        .qty-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .qty-btn {
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            border: 1px solid var(--choco-dark);
+            background: var(--butter-soft);
+            color: var(--choco-dark);
+            cursor: pointer;
+            font-weight: 800;
+        }
+        .cart-fields {
+            padding: 1rem 1.5rem;
+            background: var(--bg-warm);
+            border-top: 1.5px solid var(--border-warm);
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+        .cart-fields input {
+            width: 100%;
+            padding: 0.6rem 0.95rem;
+            border-radius: 14px;
+            border: 1.5px solid var(--border-warm);
+            background: var(--bg-card);
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-size: 0.88rem;
+            color: var(--choco-dark);
+        }
+        .cart-foot {
+            padding: 1.25rem 1.5rem;
+            background: var(--bg-card);
+            border-top: 1.5px solid var(--border-warm);
+        }
+        .total-line {
+            display: flex;
+            justify-content: space-between;
+            font-family: 'Fraunces', serif;
+            font-size: 1.25rem;
+            margin-bottom: 0.9rem;
+        }
+        .btn-wa-checkout {
+            width: 100%;
+            background: #25D366;
+            color: #FFF;
+            border: 2px solid #1B9E4B;
+            padding: 0.88rem;
+            border-radius: 99px;
+            font-weight: 800;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .btn-wa-checkout:hover {
+            background: #1EBE5D;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translateX(-50%) translateY(90px);
+            background: var(--choco-dark);
+            color: var(--butter-soft);
+            border: 1.5px solid var(--butter-yellow);
+            padding: 0.7rem 1.45rem;
+            border-radius: 99px;
+            font-size: 0.88rem;
+            font-weight: 700;
+            z-index: 200;
+            transition: transform 0.3s ease;
+        }
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+
+        @media (max-width: 920px) {
+            .hero-grid, .highlights-oven-grid, .story-two-col, .visit-grid {
+                grid-template-columns: 1fr;
+            }
+            .trust-cards-stack {
+                grid-template-columns: 1fr;
+            }
+            .nav-menu {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Audio file lokal jika diunggah ke GitHub (teh-hijau.mp3) -->
+    <audio id="bg-audio" loop preload="auto">
+        <source src="teh-hijau.mp3" type="audio/mpeg">
+    </audio>
+
+    <!-- ================= VISUAL WELCOME GATE (NO WORDS) ================= -->
+    <div id="welcome-gate">
+        <div class="gate-glow gate-glow-1"></div>
+        <div class="gate-glow gate-glow-2"></div>
+        <div style="position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center;">
+            <svg width="280" height="185" viewBox="0 0 320 210" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="canela bakery">
+                <g transform="translate(115, 22)">
+                    <path d="M22 68 C14 60, 18 46, 28 38 L66 10 C75 4, 86 8, 90 16 C94 24, 89 34, 80 41 L42 69 C33 75, 26 72, 22 68 Z" fill="#FDE39C" stroke="#4A2511" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M16 56 C8 48, 12 34, 22 26 L60 -2 C69 -8, 80 -4, 84 4 C88 12, 83 22, 74 29 L36 57 C27 63, 20 60, 16 56 Z" fill="#FFFDF8" stroke="#4A2511" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M24 48 C19 44, 21 36, 27 33 C32 30, 36 34, 34 39 C32 43, 27 43, 26 40" stroke="#4A2511" stroke-width="3" stroke-linecap="round"/>
+                    <path d="M44 12 C52 18, 58 26, 62 36" stroke="#4A2511" stroke-width="3.5" stroke-linecap="round"/>
+                    <path d="M49 9 C57 15, 63 23, 67 33" stroke="#4A2511" stroke-width="3" stroke-linecap="round"/>
+                    <path d="M58 22 L72 20 M60 26 L69 34" stroke="#4A2511" stroke-width="2.8" stroke-linecap="round"/>
+                </g>
+                <text x="160" y="155" text-anchor="middle" fill="#4A2511" font-family="'Fraunces', serif" font-weight="700" font-size="40">canela bakery</text>
+            </svg>
+            <button class="gate-enter-btn" onclick="enterBakery()" aria-label="Masuk">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14"></path>
+                    <path d="m12 5 7 7-7 7"></path>
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <!-- ================= NAVBAR ================= -->
+    <nav class="top-bar" id="atas">
+        <a href="#atas" class="brand-lockup">
+            <svg width="38" height="38" viewBox="0 0 100 100" fill="none">
+                <circle cx="50" cy="50" r="46" fill="#FDE39C" stroke="#4A2511" stroke-width="5"/>
+                <path d="M30 64 L66 32 C72 27, 79 33, 74 40 L38 72 C31 77, 24 70, 30 64 Z" fill="#FFFDF8" stroke="#4A2511" stroke-width="4.5"/>
+                <path d="M47 45 L58 56" stroke="#4A2511" stroke-width="4.5" stroke-linecap="round"/>
+            </svg>
+            <div>
+                <strong>canela bakery</strong>
+                <small>Roti kayu manis & kue artisan</small>
+            </div>
+        </a>
+
+        <ul class="nav-menu">
+            <li><a href="#menu">Menu (20)</a></li>
+            <li><a href="#paket">Paket hemat</a></li>
+            <li><a href="#cerita">Cerita kami</a></li>
+            <li><a href="#kunjungi">Kunjungi kami</a></li>
+        </ul>
+
+        <div class="nav-controls">
+            <button id="music-btn" class="btn-pill btn-music" onclick="toggleMusic()">
+                <div class="eq-bars"><span></span><span></span><span></span></div>
+                <span id="music-text">Tulus – Teh Hijau</span>
+            </button>
+
+            <button class="btn-pill btn-cart" onclick="toggleCart()">
+                <span>Keranjang</span>
+                <span class="cart-count" id="nav-cart-badge">0</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- ================= HERO + 3D SWIPEABLE STAGE + OVEN SCHEDULE ================= -->
+    <div class="hero-wrapper">
+        <header class="hero-grid">
+            <div class="hero-copy">
+                <span class="eyebrow-tag">Dipanggang hangat dengan kayu manis & mentega</span>
+                <h1>Aromanya sampai ke jalan, hangatnya sampai ke hati.</h1>
+                <p>
+                    Kami menguleni adonan sebelum subuh dan memanggangnya sepanjang pagi. Geser etalase 3D di samping atau pilih dari 20 menu hangat kami, lalu kirim pesananmu langsung lewat WhatsApp.
+                </p>
+                <div class="hero-cta-row">
+                    <a href="#menu" class="btn-solid">Pesan sekarang</a>
+                    <a href="#kunjungi" class="btn-yellow">Cari lokasi</a>
+                </div>
+            </div>
+
+            <div class="hero-3d-panel">
+                <div class="stage-3d-box" id="stage-3d" aria-label="Pilihan menu 3D, geser untuk berganti">
+                    <div class="ring-3d" id="ring-3d"></div>
+                </div>
+                <div class="active-3d-caption">
+                    <div>
+                        <h3 id="caption-3d-title">Cinnamon Roll Cream Cheese</h3>
+                        <p id="caption-3d-desc">Roti gulung lembut dengan isian kayu manis aromatik dan krim keju lumer.</p>
+                    </div>
+                    <div class="stage-nav-arrows">
+                        <button class="arrow-circle" onclick="step3D(-1)" aria-label="Sebelumnya">‹</button>
+                        <button class="arrow-circle" onclick="step3D(1)" aria-label="Berikutnya">›</button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="highlights-oven-grid">
+            <div class="trust-cards-stack">
+                <div class="trust-card">
+                    <strong>Mentega asli</strong>
+                    <small>Tanpa pengawet dan pewarna buatan, murni aroma butter & kayu manis.</small>
+                </div>
+                <div class="trust-card">
+                    <strong>Dipanggang pagi ini</strong>
+                    <small>Keluar langsung dari oven setiap pagi, bukan stok kemarin.</small>
+                </div>
+                <div class="trust-card">
+                    <strong>Pesan via WhatsApp</strong>
+                    <small>Pilih menu favoritmu di keranjang, langsung terhubung ke chat kami.</small>
+                </div>
+            </div>
+
+            <aside class="oven-board" aria-label="Jadwal keluar oven">
+                <h2>Papan oven hari ini</h2>
+                <p>Keluar dari oven pada jam</p>
+                <ul>
+                    <li><b>06.00</b><span>Sourdough Loaf & Brioche Bun hangat</span></li>
+                    <li><b>08.00</b><span>Classic Croissant, Pain au Chocolat & Kouign-Amann</span></li>
+                    <li><b>10.30</b><span>Cinnamon Roll Cream Cheese & Basque Cheesecake</span></li>
+                    <li><b>14.00</b><span>Tiramisu Slice, Mille Crepes & Soft Cookies</span></li>
+                </ul>
+            </aside>
+        </div>
+    </div>
+
+    <!-- ================= MENU SECTION (ALL 20 ITEMS) ================= -->
+    <section class="section-block" id="menu">
+        <div class="section-title-box">
+            <h2>Menu canela bakery</h2>
+            <p>Pilih kategori atau cari menu favoritmu, lalu tekan tombol tambah ke keranjang. Pesananmu siap kami terima lewat WhatsApp.</p>
+        </div>
+
+        <div class="menu-controls">
+            <div class="tab-list" role="tablist">
+                <button class="tab-btn active" onclick="setCategory('all', this)">Semua (20)</button>
+                <button class="tab-btn" onclick="setCategory('canela', this)">Seri Canela</button>
+                <button class="tab-btn" onclick="setCategory('pastry', this)">Croissant & Pastry</button>
+                <button class="tab-btn" onclick="setCategory('cake', this)">Cake & Dessert</button>
+                <button class="tab-btn" onclick="setCategory('savory', this)">Gurih & Sourdough</button>
+                <button class="tab-btn" onclick="setCategory('cookie', this)">Cookies</button>
+            </div>
+            <input type="text" class="search-input" placeholder="Cari roti, tiramisu, cookies..." oninput="setSearch(this.value)">
+        </div>
+
+        <div class="menu-grid" id="menu-grid"></div>
+    </section>
+
+    <!-- ================= STORY SECTION ================= -->
+    <section class="story-band" id="cerita">
+        <div class="section-block story-two-col">
+            <div class="story-narrative">
+                <h2>Setiap roti kami ulen dengan hati lembut.</h2>
+                <p>
+                    Dalam bahasa Spanyol, <strong>"Canela"</strong> berarti <strong>kayu manis</strong>—rempah sederhana yang aromanya selalu membawa pelukan hangat dan rasa pulang ke rumah.
+                </p>
+                <p>
+                    Semua bermula dari dapur kecil milik seorang gadis manis berhati lembut yang percaya bahwa kebahagiaan paling tulus hadir dari hal-hal yang dibuat tanpa terburu-buru: menimbang tepung dengan sabar, melipat mentega dengan teliti, dan membayangkan senyum orang yang akan menyantapnya.
+                </p>
+                <p>
+                    Karena itu setiap roti dari <strong>canela bakery</strong> terasa seperti hadiah kecil yang hangat—bukan sekadar manis di lidah, tapi juga menenangkan hati.
+                </p>
+                <p class="story-sign">Dengan hangat, canela bakery</p>
+            </div>
+
+            <div class="timeline-card">
+                <h3>Sehari di dapur canela</h3>
+                <ol class="timeline-list">
+                    <li><b>03.30</b><span>Lampu dapur menyala. Tepung, mentega, dan kayu manis ditimbang pelan-pelan.</span></li>
+                    <li><b>04.15</b><span>Adonan diulen dan dilipat berlapis-lapis dengan penuh kesabaran.</span></li>
+                    <li><b>05.30</b><span>Oven mulai hangat, aroma manis kayu manis dan mentega menyebar ke seluruh ruang.</span></li>
+                    <li><b>06.00</b><span>Loyang pertama keluar dari oven—hangat, lembut, dan siap menemani harimu.</span></li>
+                </ol>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= PAKET HEMAT ================= -->
+    <section class="section-block" id="paket">
+        <div class="section-title-box">
+            <h2>Paket hemat, lebih puas</h2>
+            <p>Kombinasi favorit pelanggan canela bakery. Lebih hemat dibanding beli satuan.</p>
+        </div>
+
+        <div class="bundle-grid">
+            <div class="bundle-card">
+                <div>
+                    <span class="bundle-badge">Hemat Rp 15.000</span>
+                    <h3>Paket Pagi Kayu Manis</h3>
+                    <p>1 Cinnamon Roll Cream Cheese + 1 Classic Butter Croissant + 1 Pain au Chocolat.</p>
+                </div>
+                <div class="bundle-price-row">
+                    <strong class="price-pill" style="font-size: 1rem;">Rp 175.000</strong>
+                    <button class="btn-pill btn-cart" onclick="addBundle('Paket Pagi Kayu Manis', 175000, 101)">+ Keranjang</button>
+                </div>
+            </div>
+
+            <div class="bundle-card">
+                <div>
+                    <span class="bundle-badge">Hemat Rp 18.000</span>
+                    <h3>Paket Teman Teh Sore</h3>
+                    <p>1 Burnt Basque Cheesecake + 1 Classic Tiramisu Slice + 1 Matcha Mille Crepes.</p>
+                </div>
+                <div class="bundle-price-row">
+                    <strong class="price-pill" style="font-size: 1rem;">Rp 205.000</strong>
+                    <button class="btn-pill btn-cart" onclick="addBundle('Paket Teman Teh Sore', 205000, 102)">+ Keranjang</button>
+                </div>
+            </div>
+
+            <div class="bundle-card">
+                <div>
+                    <span class="bundle-badge">Hemat Rp 14.000</span>
+                    <h3>Paket Kumpul Keluarga</h3>
+                    <p>1 Choco Brioche Bun + 1 Garlic Cream Cheese Bagel + 1 Sea Salt Chocolate Chip Cookie.</p>
+                </div>
+                <div class="bundle-price-row">
+                    <strong class="price-pill" style="font-size: 1rem;">Rp 222.000</strong>
+                    <button class="btn-pill btn-cart" onclick="addBundle('Paket Kumpul Keluarga', 222000, 103)">+ Keranjang</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ================= KUNJUNGI KAMI ================= -->
+    <section class="section-block" id="kunjungi">
+        <div class="visit-grid">
+            <div class="visit-info">
+                <h2>Kunjungi & hubungi kami</h2>
+                <address>
+                    Dapur Artisan <strong>canela bakery</strong><br>
+                    Pesanan segar setiap hari — siap antar & ambil di tempat
+                </address>
+                <p style="color: var(--muted); font-size: 0.92rem;">
+                    Pesan lebih pagi untuk pilihan lengkap, atau hubungi langsung lewat WhatsApp dan Instagram kami.
+                </p>
+                <div class="social-links-row">
+                    <a href="https://wa.me/6288987492639" target="_blank" rel="noopener" class="btn-solid">
+                        Chat lewat WhatsApp
+                    </a>
+                    <a href="https://www.instagram.com/canelabakery._?cplk=YzJhM3ozdTloM3Z0" target="_blank" rel="noopener" class="btn-yellow">
+                        Instagram @canelabakery._
+                    </a>
+                </div>
+            </div>
+
+            <div>
+                <h3>Jam buka oven</h3>
+                <table class="hours-table">
+                    <tbody>
+                        <tr><td>Selasa sampai Jumat</td><td>07.30 – 20.00</td></tr>
+                        <tr><td>Sabtu</td><td>07.00 – 21.00</td></tr>
+                        <tr><td>Minggu</td><td>07.00 – 19.00</td></tr>
+                        <tr><td>Senin</td><td>Libur (Istirahat & Ragi)</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        © 2026 canela bakery. Dipanggang dengan sabar, kayu manis, dan ketulusan hati.
+    </footer>
+
+    <!-- ================= CART DRAWER ================= -->
+    <div class="cart-backdrop" id="cart-backdrop" onclick="toggleCart()"></div>
+    <aside class="cart-drawer" id="cart-drawer" aria-label="Keranjang belanja">
+        <div class="cart-head">
+            <h3 style="font-size: 1.25rem;">Keranjang belanja</h3>
+            <button class="arrow-circle" onclick="toggleCart()">✕</button>
+        </div>
+
+        <div class="cart-list" id="cart-list"></div>
+
+        <div class="cart-fields">
+            <input type="text" id="cust-name" placeholder="Nama pemesan (contoh: Kak Nisa)">
+            <input type="text" id="cust-note" placeholder="Catatan pesanan (opsional, misal: jam ambil)">
+        </div>
+
+        <div class="cart-foot">
+            <div class="total-line">
+                <span>Total</span>
+                <span id="cart-total" style="color: var(--choco-dark); font-weight: 800;">Rp 0</span>
+            </div>
+            <button class="btn-wa-checkout" id="wa-btn" onclick="checkoutWhatsApp()">
+                Kirim Pesanan ke WhatsApp
+            </button>
+        </div>
+    </aside>
+
+    <div class="toast" id="toast">Ditambahkan ke keranjang</div>
+
+    <script>
+        const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwBEsQmcqnqnsyKJrsvSdwgGUcoDiIOL5mIxzroFLe7gfXocL54WvmDu_DEsV8pbG14jA/exec";
+        const WHATSAPP_NUMBER = "6288987492639";
+
+        const breads = [
+            {
+                id: 1,
+                name: "Classic Butter Croissant",
+                category: "pastry",
+                price: 50000,
+                tag: "Renyah Berlapis",
+                desc: "Pastry berlapis khas Prancis dengan tekstur luar yang renyah keemasan dan bagian dalam yang lembut, berongga, serta kaya aroma mentega murni.",
+                img: "https://i.pinimg.com/1200x/71/40/53/714053a0ecadf3d37a0603e11e1bc464.jpg",
+                fallback: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                id: 2,
+                name: "Pain au Chocolat",
+                category: "pastry",
+                price: 60000,
+                tag: "Cokelat Leleh",
+                desc: "Adonan croissant renyah yang membungkus dua batang cokelat hitam premium yang meleleh lembut di bagian tengah.",
+                img: "https://i.pinimg.com/736x/4a/14/94/4a149449a6f7c9af2a8569139f4f37a1.jpg",
+                fallback: "https://images.unsplash.com/photo-1608198093002-ad4e005484ec?auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                id: 3,
+                name: "Almond Bostock",
+                category: "pastry",
+                price: 75000,
+                tag: "Krim Almon",
+                desc: "Irisan roti brioche panggang yang direndam sirup ringan, diolesi krim almon (frangipane) manis, dan ditaburi irisan kacang almon renyah.",
+                img: "https://i.pinimg.com/1200x/b4/80/d7/b480d700493ccec130676e9019e304f4.jpg",
+                fallback: "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                id: 4,
+                name: "Cinnamon Roll Cream Cheese",
+                category: "canela",
+                price: 80000,
+                tag: "Favorit Utama",
+                desc: "Roti gulung lembut dengan isian kayu manis aromatik dan gula palem, disiram lapisan krim keju manis yang lumer di atasnya.",
+                img: "https://i.pinimg.com/736x/44/60/cd/4460cdf0d3605bf4272cc4714b97f002.jpg",
+                fallback: "https://images.unsplash.com/photo-1509365465985-25d11c17e812?auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                id: 5,
+                name: "Kouign-Amann",
+                category: "pastry",
+                price: 50000,
+                tag: "Karamel Renyah",
+                desc: "Pastry asal Brittany dengan lapisan mentega dan gula yang terkaramelisasi sempurna, menciptakan perpaduan rasa manis, gurih, dan tekstur renyah di setiap gigitan.",
+                img: "https://i.pinimg.com/1200x/bb/4f/47/bb4f47f0f76475bba1a9d9bfffcf550f.jpg",
+                fallback: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                id: 6,
+                name: "Sourdough Country Loaf",
+                category: "savory",
+                price: 55000,
+                tag: "Ragi Alami",
+                desc: "Roti artisan berfermentasi alami selama 24 jam dengan kulit luar yang garing dan bagian dalam yang kenyal serta sedikit asam menyegarkan.",
+                img: "https://i.pinimg.com/1200x/d4/3a/1a/d43a1a4ed7311b8032fdadc97c34be55.jpg",
+                fallback: "https://images.unsplash.com/photo-1585478259715-876acc5be8eb?auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                id: 7,
+                name: "Garlic Cream Cheese Bagel",
+                category: "savory",
+                price: 65000,
+                tag: "Gurih Lumer",
+                desc: "Roti bagel kenyal yang dipanggang dengan isian krim keju lembut dan siraman mentega bawang putih gurih beraroma peterseli.",
+                img: "https://i.pinimg.com/1200x/42/e4/42/42e442920577a8a8f7918a4fa0cc8214.jpg",
+                fallback: "https://images.unsplash.com/photo-1585478259715-876acc5be8eb?auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                id: 8,
+                name: "Choco Brioche Bun",
+                category: "canela",
+                price: 95000,
+                tag: "Lembut Cokelat",
+                desc: "Roti brioche super lembut dan kaya telur dengan isian krim cokelat pekat serta taburan chocolate chips panggang di permukaannya.",
+                img: "https://i.pinimg.com/1200x/bc/86/bc/bc86bc3c3923630d299bb031546802b7.jpg",
+                fallback: "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                id: 9,
+                name: "Burnt Basque Cheesecake",
+                category: "cake",
+                price: 80000,
+                tag: "Creamy Lumer",
+                desc: "Kue keju panggang bersuhu tinggi dengan permukaan cokelat karamel yang khas dan tekstur tengah yang sangat lembut, creamy, dan lumer di mulut.",
+                img: "https://i.pinimg.com/736x/45/4d/df/454ddfa34ab965dc83d8a763b21d3b19.jpg",
+                fallback: "https://images.unsplash.com/photo-1533134242443-d4fd215305ad?auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                id: 10,
+                name: "Classic Tiramisu Slice",
+                category: "cake",
+                price: 70000,
+                tag: "Espresso Lembut",
+                desc: "Lapisan biskuit ladyfinger yang dicelupkan ke dalam espresso pekat, dipadukan dengan krim keju mascarpone lembut dan taburan bubuk kakao.",
+                img: "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?auto=format&fit=crop&w=800&q=80",
+                fallback: "https://images.unsplash.com/photo-1571877227200-a0d98ea607e9?auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                id: 11,
+                name: "Lemon Meringue Tart",
+                category: "cake",
+                price: 45000,
+                tag: "Asam Segar",
+                desc: "Kulit pai renyah berisi lemon curd yang asam segar, dihiasi puncak krim meringue lembut yang dibakar ringan hingga kecokelatan.",
+                img: "https://i.pinimg.com/736x/c5/02/43/c502438f54e09c8fe28486dfe9c5350d.jpg",
+                fallback: "https://images.unsplash.com/photo-1519915028121-7d3463d20b13?auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                id: 12,
+                name: "Fudgy Dark Chocolate Brownies",
+                category: "cake",
+                price: 35000,
+                tag: "Cokelat Pekat",
+                desc: "Kue cokelat panggang padat dengan bagian atas yang retak mengilap, tekstur dalam yang lembap, serta rasa cokelat hitam pekat dan sedikit gurih.",
+                img: "https://i.pinimg.com/736x/14/27/fe/1427fe705494162c8c5f5ca3abddb0bd.jpg",
+                fallback: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                id: 13,
+                name: "Carrot Walnut Cake",
+                category: "canela",
+                price: 55000,
+                tag: "Rempah Hangat",
+                desc: "Kue rempah lembut berbahan parutan wortel segar dan kacang kenari panggang, dilapisi frosting krim keju vanila yang ringan.",
+                img: "https://i.pinimg.com/736x/c1/46/40/c146403617439772fb672ec430f044ab.jpg",
+                fallback: "https://images.unsplash.com/photo-1621303837174-89787a7d4729?auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                id: 14,
+                name: "Salted Caramel Éclair",
+                category: "pastry",
+                price: 68000,
+                tag: "Karamel Asin",
+                desc: "Kue sus memanjang dengan isian krim diplomat vanila yang lembut dan lapisan glasir karamel asin manis di bagian atas.",
+                img: "https://i.pinimg.com/1200x/54/ba/bc/54babc4b2d5fb297fe84fc2b55fb8369.jpg",
+                fallback: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                id: 15,
+                name: "Matcha Mille Crepes",
+                category: "cake",
+                price: 73000,
+                tag: "Matcha Jepang",
+                desc: "Susunan puluhan lembar crepes tipis beraroma teh hijau Jepang yang dipadukan dengan krim kocok ringan di setiap lapisannya.",
+                img: "https://i.pinimg.com/736x/e0/9e/0c/e09e0c39541e3a5ec0275190f408d755.jpg",
+                fallback: "https://images.unsplash.com/photo-1519915028121-7d3463d20b13?auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                id: 16,
+                name: "Beef & Cheese Quiche",
+                category: "savory",
+                price: 43000,
+                tag: "Gurih Hangat",
+                desc: "Pai gurih dengan kulit pastri renyah, berisi campuran telur lembut, krim, daging sapi asap tumis, dan lelehan keju cheddar.",
+                img: "https://i.pinimg.com/736x/6b/47/ff/6b47ff6cc15b26fa766b582979fdd431.jpg",
+                fallback: "https://images.unsplash.com/photo-1608198093002-ad4e005484ec?auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                id: 17,
+                name: "Spinach & Ricotta Puff",
+                category: "savory",
+                price: 65000,
+                tag: "Pastry Gurih",
+                desc: "Pastry renyah mengembang dengan isian bayam segar, keju ricotta lembut, dan sedikit sentuhan pala yang harum.",
+                img: "https://i.pinimg.com/736x/3d/27/de/3d27deff1bb7a4f6d2135011ffa51cef.jpg",
+                fallback: "https://images.unsplash.com/photo-1608198093002-ad4e005484ec?auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                id: 18,
+                name: "Tuna Mayo Brioche Roll",
+                category: "savory",
+                price: 98000,
+                tag: "Gurih Creamy",
+                desc: "Roti brioche gurih berisikan salad tuna mayones yang creamy, jagung manis, dan taburan keju mozarela leleh.",
+                img: "https://i.pinimg.com/1200x/86/6c/6c/866c6c86ac849bbfd851d9c4b4b18200.jpg",
+                fallback: "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                id: 19,
+                name: "Sea Salt Chocolate Chip Cookie",
+                category: "cookie",
+                price: 76000,
+                tag: "Soft Cookie",
+                desc: "Kukis renyah di pinggir namun lembut di tengah dengan potongan cokelat hitam leleh dan taburan serpihan garam laut untuk menyeimbangkan rasa manis.",
+                img: "https://i.pinimg.com/736x/0d/70/f6/0d70f6730335336dd04cf0a4fc64cf65.jpg",
+                fallback: "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=800&q=80"
+            },
+            {
+                id: 20,
+                name: "Red Velvet White Choco Cookie",
+                category: "cookie",
+                price: 43000,
+                tag: "Velvet Manis",
+                desc: "Kukis merah beludru dengan aroma kakao ringan yang dipadukan dengan potongan cokelat putih manis di dalamnya.",
+                img: "https://i.pinimg.com/1200x/da/cf/d0/dacfd064da083be2098f10e164b9a238.jpg",
+                fallback: "https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=800&q=80"
+            }
+        ];
+
+        const hero3DItems = [
+            breads[3], breads[0], breads[1], breads[8],
+            breads[9], breads[14], breads[18], breads[19]
+        ];
+
+        let cart = [];
+        let activeCategory = 'all';
+        let searchQuery = '';
+
+        // ================= WELCOME GATE & MUSIK "TEH HIJAU - TULUS" =================
+        const bgAudio = document.getElementById('bg-audio');
+        let audioCtx = null;
+        let isPlaying = false;
+        let musicTimer = null;
+        let chordIdx = 0;
+
+        // Melodi lembut bernuansa akustik hangat sebagai cadangan bila teh-hijau.mp3 belum diunggah
+        const warmChords = [
+            [174.61, 220.00, 261.63, 329.63, 392.00],
+            [164.81, 196.00, 246.94, 293.66, 392.00],
+            [146.83, 174.61, 220.00, 261.63, 329.63],
+            [130.81, 196.00, 246.94, 293.66, 329.63]
+        ];
+
+        function playSynthFallback(notes) {
+            if (!audioCtx) return;
+            const now = audioCtx.currentTime;
+            notes.forEach((freq, idx) => {
+                const osc = audioCtx.createOscillator();
+                const filter = audioCtx.createBiquadFilter();
+                const gain = audioCtx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(freq, now + idx * 0.11);
+                filter.type = 'lowpass';
+                filter.frequency.setValueAtTime(920, now);
+                gain.gain.setValueAtTime(0.0001, now + idx * 0.11);
+                gain.gain.exponentialRampToValueAtTime(0.045, now + idx * 0.11 + 0.06);
+                gain.gain.exponentialRampToValueAtTime(0.0001, now + idx * 0.11 + 2.4);
+                osc.connect(filter);
+                filter.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start(now + idx * 0.11);
+                osc.stop(now + idx * 0.11 + 2.5);
+            });
+        }
+
+        function startFallbackSynth() {
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+            playSynthFallback(warmChords[chordIdx % warmChords.length]);
+            chordIdx++;
+            musicTimer = setInterval(() => {
+                if (isPlaying) {
+                    playSynthFallback(warmChords[chordIdx % warmChords.length]);
+                    chordIdx++;
+                }
+            }, 2200);
+        }
+
+        function toggleMusic() {
+            const btn = document.getElementById('music-btn');
+            const label = document.getElementById('music-text');
+
+            if (!isPlaying) {
+                isPlaying = true;
+                btn.classList.add('playing');
+                label.textContent = 'Memutar: Teh Hijau';
+
+                // Coba putar file teh-hijau.mp3 terlebih dahulu; jika belum diunggah, putar piano kafe lembut
+                const playPromise = bgAudio.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(() => {
+                        startFallbackSynth();
+                    });
+                }
+            } else {
+                isPlaying = false;
+                btn.classList.remove('playing');
+                label.textContent = 'Tulus – Teh Hijau';
+                bgAudio.pause();
+                clearInterval(musicTimer);
+            }
+        }
+
+        function enterBakery() {
+            document.getElementById('welcome-gate').classList.add('hidden');
+            if (!isPlaying) toggleMusic();
+        }
+
+        // ================= 3D SWIPEABLE STAGE =================
+        let angle3D = 0;
+        let dragging3D = false;
+        let lastX = 0;
+        let vel3D = 0;
+
+        function init3DStage() {
+            const ring = document.getElementById('ring-3d');
+            const count = hero3DItems.length;
+            const step = 360 / count;
+            const radius = window.innerWidth < 920 ? 225 : 295;
+
+            ring.innerHTML = hero3DItems.map((item, idx) => `
+                <div class="card-3d-item" id="item-3d-${idx}" style="transform: rotateY(${idx * step}deg) translateZ(${radius}px);">
+                    <img src="${item.img}" alt="${item.name}" onerror="this.onerror=null;this.src='${item.fallback}';">
+                    <span>${item.name}</span>
+                </div>
+            `).join('');
+
+            const stage = document.getElementById('stage-3d');
+
+            stage.addEventListener('mousedown', (e) => {
+                dragging3D = true;
+                lastX = e.clientX;
+                vel3D = 0;
+            });
+            window.addEventListener('mousemove', (e) => {
+                if (!dragging3D) return;
+                const dx = e.clientX - lastX;
+                lastX = e.clientX;
+                vel3D = dx * 0.45;
+                angle3D += vel3D;
+                render3DState();
+            });
+            window.addEventListener('mouseup', () => { dragging3D = false; });
+
+            stage.addEventListener('touchstart', (e) => {
+                dragging3D = true;
+                lastX = e.touches[0].clientX;
+                vel3D = 0;
+            }, { passive: true });
+            stage.addEventListener('touchmove', (e) => {
+                if (!dragging3D) return;
+                const dx = e.touches[0].clientX - lastX;
+                lastX = e.touches[0].clientX;
+                vel3D = dx * 0.55;
+                angle3D += vel3D;
+                render3DState();
+            }, { passive: true });
+            stage.addEventListener('touchend', () => { dragging3D = false; });
+
+            requestAnimationFrame(loop3D);
+        }
+
+        function render3DState() {
+            const ring = document.getElementById('ring-3d');
+            ring.style.transform = `rotateY(${angle3D}deg)`;
+
+            const count = hero3DItems.length;
+            const step = 360 / count;
+            const norm = ((-angle3D % 360) + 360) % 360;
+            const activeIdx = Math.round(norm / step) % count;
+
+            hero3DItems.forEach((item, idx) => {
+                const el = document.getElementById(`item-3d-${idx}`);
+                if (el) el.classList.toggle('is-active', idx === activeIdx);
+            });
+
+            const activeItem = hero3DItems[activeIdx];
+            if (activeItem) {
+                document.getElementById('caption-3d-title').textContent = activeItem.name;
+                document.getElementById('caption-3d-desc').textContent = activeItem.desc;
+            }
+        }
+
+        function loop3D() {
+            if (!dragging3D) {
+                if (Math.abs(vel3D) > 0.05) {
+                    angle3D += vel3D;
+                    vel3D *= 0.93;
+                } else {
+                    angle3D -= 0.18;
+                }
+                render3DState();
+            }
+            requestAnimationFrame(loop3D);
+        }
+
+        function step3D(dir) {
+            const step = 360 / hero3DItems.length;
+            angle3D -= dir * step;
+            render3DState();
+        }
+
+        // ================= MENU GRID =================
+        function formatRp(val) {
+            return 'Rp ' + val.toLocaleString('id-ID');
+        }
+
+        function renderMenu() {
+            const grid = document.getElementById('menu-grid');
+            const filtered = breads.filter(b => {
+                const matchCat = activeCategory === 'all' || b.category === activeCategory;
+                const matchQuery = b.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+                                   b.desc.toLowerCase().includes(searchQuery.toLowerCase());
+                return matchCat && matchQuery;
+            });
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `<p style="grid-column:1/-1; text-align:center; color:var(--muted); padding:2rem;">Menu yang dicari tidak ditemukan.</p>`;
+                return;
+            }
+
+            grid.innerHTML = filtered.map(b => `
+                <article class="menu-card">
+                    <div>
+                        <div class="menu-thumb">
+                            <span class="badge-tag">${b.tag}</span>
+                            <img src="${b.img}" alt="${b.name}" loading="lazy" onerror="this.onerror=null;this.src='${b.fallback}';">
+                        </div>
+                        <div class="menu-body">
+                            <div class="menu-header-row">
+                                <h3>${b.name}</h3>
+                                <span class="price-pill">${formatRp(b.price)}</span>
+                            </div>
+                            <p>${b.desc}</p>
+                        </div>
+                    </div>
+                    <div class="menu-footer-action">
+                        <button class="btn-add-bag" onclick="addToCart(${b.id})">+ Tambah ke keranjang</button>
+                    </div>
+                </article>
+            `).join('');
+        }
+
+        function setCategory(cat, btn) {
+            activeCategory = cat;
+            document.querySelectorAll('.tab-btn').forEach(t => t.classList.remove('active'));
+            btn.classList.add('active');
+            renderMenu();
+        }
+
+        function setSearch(val) {
+            searchQuery = val;
+            renderMenu();
+        }
+
+        // ================= CART & WHATSAPP CHECKOUT =================
+        function showToast(text) {
+            const t = document.getElementById('toast');
+            t.textContent = text;
+            t.classList.add('show');
+            setTimeout(() => t.classList.remove('show'), 2200);
+        }
+
+        function addToCart(id) {
+            const product = breads.find(b => b.id === id);
+            if (!product) return;
+            const found = cart.find(c => c.id === id);
+            if (found) {
+                found.qty += 1;
+            } else {
+                cart.push({ id: product.id, name: product.name, price: product.price, qty: 1 });
+            }
+            updateCart();
+            showToast(`${product.name} masuk keranjang`);
+        }
+
+        function addBundle(name, price, id) {
+            const found = cart.find(c => c.id === id);
+            if (found) {
+                found.qty += 1;
+            } else {
+                cart.push({ id, name, price, qty: 1 });
+            }
+            updateCart();
+            showToast(`${name} masuk keranjang`);
+        }
+
+        function changeQty(id, delta) {
+            const idx = cart.findIndex(c => c.id === id);
+            if (idx > -1) {
+                cart[idx].qty += delta;
+                if (cart[idx].qty <= 0) cart.splice(idx, 1);
+            }
+            updateCart();
+        }
+
+        function updateCart() {
+            const badge = document.getElementById('nav-cart-badge');
+            const list = document.getElementById('cart-list');
+            const totalEl = document.getElementById('cart-total');
+
+            const totalQty = cart.reduce((s, i) => s + i.qty, 0);
+            const totalPrice = cart.reduce((s, i) => s + (i.price * i.qty), 0);
+
+            badge.textContent = totalQty;
+            totalEl.textContent = formatRp(totalPrice);
+
+            if (cart.length === 0) {
+                list.innerHTML = `<p style="text-align:center; color:var(--muted); padding:3rem 1rem;">Keranjang belanja masih kosong. Pilih roti hangat di menu ya.</p>`;
+                return;
+            }
+
+            list.innerHTML = cart.map(item => `
+                <div class="cart-row">
+                    <div>
+                        <strong style="font-size:0.95rem; display:block;">${item.name}</strong>
+                        <span style="font-size:0.85rem; color:var(--choco-mid); font-weight:700;">${formatRp(item.price * item.qty)}</span>
+                    </div>
+                    <div class="qty-controls">
+                        <button class="qty-btn" onclick="changeQty(${item.id}, -1)">-</button>
+                        <span style="font-weight:700; min-width:18px; text-align:center;">${item.qty}</span>
+                        <button class="qty-btn" onclick="changeQty(${item.id}, 1)">+</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function toggleCart() {
+            document.getElementById('cart-drawer').classList.toggle('open');
+            document.getElementById('cart-backdrop').classList.toggle('open');
+        }
+
+        function checkoutWhatsApp() {
+            if (cart.length === 0) {
+                showToast('Pilih roti dulu sebelum memesan');
+                return;
+            }
+
+            const customerName = document.getElementById('cust-name').value.trim() || 'Pelanggan';
+            const customerNote = document.getElementById('cust-note').value.trim() || '-';
+            const totalPrice = cart.reduce((s, i) => s + (i.price * i.qty), 0);
+            const itemsSummary = cart.map(i => `${i.qty}x ${i.name} (${formatRp(i.price * i.qty)})`).join(', ');
+
+            let lines = [
+                `Halo *canela bakery*, saya *${customerName}* ingin memesan:`,
+                ``
+            ];
+            cart.forEach(i => {
+                lines.push(`- ${i.qty}x ${i.name} (${formatRp(i.price * i.qty)})`);
+            });
+            lines.push(``);
+            lines.push(`*Total:* ${formatRp(totalPrice)}`);
+            lines.push(`*Catatan:* ${customerNote}`);
+
+            const waUrl = `https://api.whatsapp.com/send?phone=${WHATSAPP_NUMBER}&text=${encodeURIComponent(lines.join('\n'))}`;
+
+            const payload = JSON.stringify({
+                timestamp: new Date().toISOString(),
+                nama: customerName,
+                pesanan: itemsSummary,
+                total: totalPrice,
+                catatan: customerNote
+            });
+
+            try {
+                if (navigator.sendBeacon) {
+                    navigator.sendBeacon(APPS_SCRIPT_URL, new Blob([payload], { type: 'text/plain' }));
+                } else {
+                    fetch(APPS_SCRIPT_URL, { method: 'POST', mode: 'no-cors', keepalive: true, body: payload });
+                }
+            } catch (e) {}
+
+            window.location.href = waUrl;
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            init3DStage();
+            renderMenu();
+            updateCart();
+        });
+    </script>
+</body>
+</html>
